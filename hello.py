@@ -17,10 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'da
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Configurações do Mailgun
-MAILGUN_DOMAIN = 'sandbox93a2452791294e1d965d2bd71de9e3d9.mailgun.org'
-MAILGUN_API_KEY = '0acea93460af69961fe63c535fe5ebce-911539ec-85adaa9f'
-FROM_EMAIL = 'sandbox93a2452791294e1d965d2bd71de9e3d9.mailgun.org'
-TO_EMAILS = ['flaskaulasweb@zohomail.com','queiroz.lopes@aluno.ifsp.edu.br']
+TO_EMAILS = ['flaskaulasweb@zohomail.com','sena.vinicius@aluno.ifsp.edu.br']
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
@@ -28,13 +25,15 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
 def send_email(subject, body):
-  	return requests.post(
-  		"https://api.mailgun.net/v3/sandbox2147206ffd4640a0b6c988122c171af5.mailgun.org/messages",
-  		auth=("api", "0acea93460af69961fe63c535fe5ebce-911539ec-85adaa9f"),
-  		data={"from": "Excited User <mailgun@sandbox2147206ffd4640a0b6c988122c171af5.mailgun.org>",
-  			"to": TO_EMAILS,
-  			"subject": subject,
-  			"text": body})
+    return requests.post(
+        "https://api.mailgun.net/v3/sandbox20203c57442e40e8a64987c0f0bbf1c4.mailgun.org/messages",
+        auth=("api", "1065c4fdda73bd999f7b7be3e5ad70fa-911539ec-ebd11a15"),  # Corrigido para passar uma tupla
+        data={"from": "Excited User <mailgun@sandbox20203c57442e40e8a64987c0f0bbf1c4.mailgun.org>",
+              "to": TO_EMAILS,
+              "subject": subject,
+              "text": body}
+    )
+
 
 class Role(db.Model):
     __tablename__ = 'roles'
@@ -126,4 +125,4 @@ def index():
                            total_users=total_users, users_by_role=users_by_role)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=5001, debug=True)
